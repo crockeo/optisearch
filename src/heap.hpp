@@ -15,7 +15,7 @@ struct Pair {
     V value;
 
     // Constructing a new Pair.
-    Pair(P&&, V&&);
+    Pair(P, V);
 };
 
 // Comparing two pairs using the Priority value. Requires the P to have some
@@ -42,6 +42,9 @@ private:
     // Getting the right node of an index.
     int getRight(int) const;
 
+    // Swapping the values at two indices.
+    void swap(int, int);
+
     // Bubbling a value all the way to the top.
     void bubbleUp(int);
 
@@ -56,19 +59,19 @@ public:
     void insert(P, V);
 
     // Peeking at the max value in the heap.
-    V peek();
+    V peek() const;
 
     // Removing the max value in the heap & maintaining the heap property.
     V remove();
 
     // Getting the current size of the heap.
-    int size();
+    int size() const;
 
     // Checking if the heap is empty.
-    bool isEmpty();
+    bool isEmpty() const;
 
     // Returning this heap as a vector of Pairs.
-    std::vector<Pair<P, V>> asVector();
+    std::vector<Pair<P, V>> asVector() const;
 };
 
 #include "heap.tpp"
