@@ -3,6 +3,7 @@
 
 //////////////
 // Includes //
+#include <functional>
 #include <vector>
 
 //////////
@@ -18,16 +19,11 @@ struct Pair {
     Pair(P, V);
 };
 
-// Comparing two pairs using the Priority value. Requires the P to have some
-// implementation of the function 'compare' to compare two values in an analogue
-// nature.
-template <typename P, typename V>
-int compare(const Pair<P, V>&, const Pair<P, V>&);
-
 // A heap of values given a comparator.
 template <typename P, typename V>
 class Heap {
 private:
+    std::function<int(const P, const P)> comparator;
     std::vector<Pair<P, V>> pairs;
 
     // Comparing two pairs at given locations in the heap.
@@ -53,7 +49,7 @@ private:
 
 public:
     // Creating a new, empty heap.
-    Heap();
+    Heap(std::function<int(const P, const P)>);
 
     // Inserting a new value into the heap.
     void insert(P, V);

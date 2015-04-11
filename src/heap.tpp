@@ -8,19 +8,6 @@ Pair<P, V>::Pair(P priority, V value) {
     this->value = value;
 }
 
-// Comparing two integers.
-int compare(const int n1, const int n2) {
-    return n1 - n2;
-}
-
-// Comparing two pairs using the Priority value. Requires the P to have some
-// implementation of the function 'compare' to compare two values in an analogue
-// nature.
-template <typename P, typename V>
-int compare(const Pair<P, V>& pair1, const Pair<P, V>& pair2) {
-    return compare(pair1.priority, pair2.priority);
-}
-
 // Comparing two pairs at given locations in the heap.
 template <typename P, typename V>
 int Heap<P, V>::compareAt(int idx1, int idx2) const {
@@ -85,7 +72,9 @@ void Heap<P, V>::bubbleDown(int index) {
 
 // Creating a new, empty heap.
 template <typename P, typename V>
-Heap<P, V>::Heap() { }
+Heap<P, V>::Heap(std::function<int(const P, const P)> comparator) {
+    this->comparator = comparator;
+}
 
 // Inserting a new value into the heap.
 template <typename P, typename V>

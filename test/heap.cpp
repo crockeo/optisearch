@@ -9,7 +9,7 @@
 
 // Testing the .insert & .remove methods.
 TEST_CASE("Insert & Remove") {
-    Heap<int, int> intHeap;
+    Heap<int, int> intHeap([](const int n1, const int n2) -> int { return n1 - n2; });
 
     intHeap.insert(3, 3);
     intHeap.insert(1, 1);
@@ -33,7 +33,7 @@ TEST_CASE("Insert & Remove") {
 
 // Testing the order of a vector returned from asVector.
 TEST_CASE("AsVector") {
-    Heap<int, int> intHeap;
+    Heap<int, int> intHeap([](const int n1, const int n2) -> int { return n1 - n2; });
 
     intHeap.insert(3, 3);
     intHeap.insert(1, 1);
