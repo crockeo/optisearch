@@ -64,6 +64,88 @@ TEST_CASE("Board Construction") {
             REQUIRE(filled.getState(col, row) == row * filled.getWidth() + col);
 }
 
+// Testing operator== for boards.
+TEST_CASE("Equality") {
+    std::vector<int> states {
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
+    };
+
+    Board board1(3, 3, states);
+    Board board2(3, 3, states);
+
+    REQUIRE(board1 == board2);
+}
+
+// Testing isValidMove for a board.
+TEST_CASE("Validating Moves") {
+    std::vector<int> states {
+        1, 3, 7,
+        2, 4, 8,
+        5, 0, 6
+    };
+    Board filled(3, 3, states);
+
+    REQUIRE(filled.isValidMove(BoardMove(1, 1,
+                                         1, 2)) == true);
+
+    REQUIRE(filled.isValidMove(BoardMove(0, 0,
+                                         0, 0)) == false);
+
+    REQUIRE(filled.isValidMove(BoardMove(1, 3,
+                                         1, 2)) == false);
+}
+
+// Testing doMove for a board.
+TEST_CASE("doMove") {
+    std::vector<int> vs0 {
+        1, 3, 7,
+        2, 0, 8,
+        5, 4, 6
+    };
+    Board moved1(3, 3, vs0);
+
+    std::vector<int> vs1 {
+        1, 3, 7,
+        2, 4, 8,
+        0, 5, 6
+    };
+    Board moved2(3, 3, vs1);
+
+    std::vector<int> vs2 {
+        1, 3, 7,
+        2, 4, 8,
+        5, 6, 0
+    };
+    Board moved3(3, 3, vs2);
+
+    // Setting up the real board.
+    std::vector<int> states {
+        1, 3, 7,
+        2, 4, 8,
+        5, 0, 6
+    };
+    Board filled(3, 3, states);
+
+    REQUIRE(filled.doMove(BoardMove(1, 1, 1, 2)) == moved1);
+    REQUIRE(filled.doMove(BoardMove(0, 2, 1, 2)) == moved2);
+    REQUIRE(filled.doMove(BoardMove(2, 2, 1, 2)) == moved3);
+    REQUIRE_THROWS(filled.doMove(BoardMove(-1, -1, 3, 3)));
+}
+
+// Testing getState & setState on the board.
+TEST_CASE("Get & Set") {
+    Board empty(3, 3);
+
+    empty.setState(0, 0, 3);
+    empty.setState(1, 0, 2);
+
+    REQUIRE(empty.getState(0, 0) == 3);
+    REQUIRE(empty.getState(1, 0) == 2);
+    REQUIRE(empty.getState(2, 0) == 0);
+}
+
 // Testing the distance function on a board.
 TEST_CASE("Board Distance") {
     std::vector<int> states {

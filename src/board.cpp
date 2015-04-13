@@ -11,7 +11,7 @@
 BoardMove::BoardMove(int col1, int row1,
                      int col2, int row2) {
     this->col1 = col1;
-    this->col1 = row1;
+    this->row1 = row1;
 
     this->col2 = col2;
     this->row2 = row2;
@@ -49,44 +49,95 @@ Board::Board(int width, int height) :
         states[i] = 0;
 }
 
+// Checking equality between this and another board.
+bool Board::operator==(const Board& b) const {
+    if (width != b.width || height != b.height)
+        return false;
+
+    for (int row = 0; row < height; row++)
+        for (int col = 0; col < width; col++)
+            if (getState(col, row) != b.getState(col, row))
+                return false;
+
+    return true;
+}
+
 // Checking if a move is valid.
 bool Board::isValidMove(BoardMove bm) const {
-    // TODO: Implement.
-    return false;
+    return bm.col1 >= 0 && bm.col1 < width  &&
+           bm.row1 >= 0 && bm.row1 < height &&
+           bm.col2 >= 0 && bm.col2 < width  &&
+           bm.row2 >= 0 && bm.row2 < height &&
+          (getState(bm.col1, bm.row1) == 0 ||
+           getState(bm.col2, bm.row2) == 0);
 }
 
 // Attempting to perform a move. If successful, it returns true, otherwise
 // it returns false.
-bool Board::doMove(BoardMove bm) {
-    // TODO: Implement
-    return false;
+Board Board::doMove(BoardMove bm) const throw(std::logic_error) {
+    if (!isValidMove(bm))
+        throw std::logic_error("Invalid board move.");
+
+    Board b(*this);
+
+    int temp = b.getState(bm.col1, bm.row1);
+    b.setState(bm.col1, bm.row1, b.getState(bm.col2, bm.row2));
+    b.setState(bm.col2, bm.row2, temp);
+
+    return b;
 }
 
 // Setting the state of a value at a given position in the Board.
-bool Board::setState(int col, int row, int value) {
+bool Board::setState(int col, int row, int value) throw(std::logic_error) {
     int i = index(col, row);
     if (i < 0)
-        return false;
+        throw std::logic_error("Column or row is outside of board bounds.");
 
     states[i] = value;
     return true;
 }
 
 // Getting the state of a value at a given postiion in the Board.
-int Board::getState(int col, int row) const {
+int Board::getState(int col, int row) const throw(std::logic_error) {
     int i = index(col, row);
     if (i < 0)
-        return -1;
+        throw std::logic_error("Column or row is outside of board bounds.");
 
     return states.at(i);
 }
 
+// Getting a list of valid moves at this given state.
+std::vector<BoardMove> Board::validMoves() const {
+    std::vector<BoardMove> moves;
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            if (getState(col, row) == 0) {
+                if (col - 1 >= 0)
+                    moves.push_back(BoardMove(col - 1, row, col, row));
+                if (col + 1 < width)
+                    moves.push_back(BoardMove(col + 1, row, col, row));
+                if (row - 1 >= 0)
+                    moves.push_back(BoardMove(col, row - 1, col, row));
+                if (row + 1 < height)
+                    moves.push_back(BoardMove(col, row + 1, col, row));
+
+                break;
+            }
+        }
+    }
+
+    return moves;
+}
+
 // Getting the distance from a value at a given position and its target
 // position.
-int Board::distance(int col, int row) const {
-    int state = getState(col, row);
-    if (state == -1)
-        return -1;
+int Board::distance(int col, int row) const throw(std::logic_error) {
+    int state;
+    try {
+        state = getState(col, row);
+    } catch (std::logic_error e) {
+        throw e;
+    }
 
     int tcol = state % width,
         trow = state / width;

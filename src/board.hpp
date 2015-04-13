@@ -3,6 +3,7 @@
 
 //////////////
 // Includes //
+#include <exception>
 #include <vector>
 
 //////////
@@ -33,22 +34,28 @@ public:
     // Creating an empty board (with everything at 0) at a given width & height.
     Board(int, int);
 
+    // Checking equality between this and another board.
+    bool operator==(const Board&) const;
+
     // Checking if a move is valid.
     bool isValidMove(BoardMove) const;
 
     // Attempting to perform a move. If successful, it returns true, otherwise
     // it returns false.
-    bool doMove(BoardMove);
+    Board doMove(BoardMove) const throw(std::logic_error);
 
     // Setting the state of a value at a given position in the Board.
-    bool setState(int, int, int);
+    bool setState(int, int, int) throw(std::logic_error);
 
     // Getting the state of a value at a given postiion in the Board.
-    int getState(int, int) const;
+    int getState(int, int) const throw(std::logic_error);
+
+    // Getting a list of valid moves at this given state.
+    std::vector<BoardMove> validMoves() const;
 
     // Getting the distance from a value at a given position and its target
     // position.
-    int distance(int, int) const;
+    int distance(int, int) const throw(std::logic_error);
 
     // Getting the whole set of states as a vector.
     std::vector<int> asVector() const;
