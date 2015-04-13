@@ -166,6 +166,19 @@ TEST_CASE("Board Distance") {
     REQUIRE(filled.distance(2, 2) == 2);
 }
 
+// Testing loading a board from a file.
+TEST_CASE("Load") {
+    Board b = loadBoard("res/board01.txt");
+
+    for (int row = 0; row < b.getHeight(); row++)
+        for (int col = 0; col < b.getWidth(); col++)
+            REQUIRE(b.getState(col, row) == row * b.getWidth() + col);
+
+    REQUIRE_THROWS(loadBoard("res/doesnotexist.txt"));
+    REQUIRE_THROWS(loadBoard("res/invalidsize.txt"));
+    REQUIRE_THROWS(loadBoard("res/invalidboard.txt"));
+}
+
 ////
 // Heap
 

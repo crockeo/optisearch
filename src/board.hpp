@@ -9,6 +9,7 @@
 //////////
 // Code //
 
+// Representing a single move on a board.
 struct BoardMove {
     int col1, row1;
     int col2, row2;
@@ -17,6 +18,7 @@ struct BoardMove {
     BoardMove(int, int, int, int);
 };
 
+// An entire board.
 class Board {
 private:
     int width, height;
@@ -64,5 +66,11 @@ public:
     int getWidth() const;
     int getHeight() const;
 };
+
+// Loading a board from an input stream.
+Board loadBoard(std::istream&&) throw(std::runtime_error);
+
+// Loading a board from a file at a given location.
+Board loadBoard(std::string) throw(std::runtime_error);
 
 #endif

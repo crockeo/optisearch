@@ -3,6 +3,7 @@
 //////////////
 // Includes //
 #include <cstdlib>
+#include <fstream>
 
 //////////
 // Code //
@@ -151,3 +152,37 @@ std::vector<int> Board::asVector() const { return states; }
 // Getting the respective dimensions of this board.
 int Board::getWidth() const { return width; }
 int Board::getHeight() const { return height; }
+
+// Loading a board from an input stream.
+Board loadBoard(std::istream&& in) throw(std::runtime_error) {
+    if (!in.good())
+        throw std::runtime_error("Input stream is not good.");
+
+    int width,
+        height;
+    in >> width;
+    in >> height;
+
+    if (width < 0 || height < 0)
+        throw std::runtime_error("Cannot have negative width / height.");
+
+    std::vector<int> states;
+    int state;
+    for (int i = 0; i < width * height; i++) {
+        if (in.eof())
+            throw std::runtime_error("Unexpected end of stream.");
+
+        in >> state;
+        if (state < 0)
+            throw std::runtime_error("Cannot have negative state.");
+
+        states.push_back(state);
+    }
+
+    return Board(width, height, states);
+}
+
+// Loading a board from a file at a given location.
+Board loadBoard(std::string path) throw(std::runtime_error) {
+    return loadBoard(std::ifstream(path));
+}
