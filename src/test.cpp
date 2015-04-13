@@ -30,13 +30,16 @@
 ////
 // Search
 
-// Testing manhattan distance.
-TEST_CASE("Manhattan Distance") {
-    REQUIRE(manhattanDistance( 0, 0,  1, 1) == 2);
-    REQUIRE(manhattanDistance( 0, 0,  5, 1) == 6);
-    REQUIRE(manhattanDistance( 4, 3,  1, 2) == 4);
-    REQUIRE(manhattanDistance(10, 7, -3, 4) == 16);
-    REQUIRE(manhattanDistance(31, 0, 31, 0) == 0);
+// Testing the board heuristic.
+TEST_CASE("Board Heuristic") {
+    std::vector<int> states {
+        1, 3, 7,
+        2, 4, 8,
+        5, 0, 6
+    };
+    Board filled(3, 3, states);
+
+    REQUIRE(heuristic(filled) == 18);
 }
 
 ////
