@@ -20,11 +20,24 @@
 // Includes //
 #include <vector>
 
+#include "search.hpp"
 #include "board.hpp"
 #include "heap.hpp"
 
 //////////
 // Code //
+
+////
+// Search
+
+// Testing manhattan distance.
+TEST_CASE("Manhattan Distance") {
+    REQUIRE(manhattanDistance( 0, 0,  1, 1) == 2);
+    REQUIRE(manhattanDistance( 0, 0,  5, 1) == 6);
+    REQUIRE(manhattanDistance( 4, 3,  1, 2) == 4);
+    REQUIRE(manhattanDistance(10, 7, -3, 4) == 16);
+    REQUIRE(manhattanDistance(31, 0, 31, 0) == 0);
+}
 
 ////
 // Board
