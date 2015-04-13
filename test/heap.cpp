@@ -1,9 +1,3 @@
-//////////////
-// Includes //
-#include <vector>
-
-#include "../src/heap.hpp"
-
 //////////
 // Code //
 

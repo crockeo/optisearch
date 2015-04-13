@@ -8,7 +8,7 @@ set(LIBRARY_OUTPUT_PATH    "${PROJECT_SOURCE_DIR}/build/lib")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
 # Creating the optisearch-common library.
-set(SOURCES src/main.cpp)
+set(SOURCES src/board.cpp)
 add_library(optisearch-common ${SOURCES})
 
 # Setting up the executables themselves.
@@ -16,5 +16,5 @@ add_executable(optisearch src/main.cpp)
 add_executable(optisearch-test test/main.cpp)
 
 # Linking the libraries to the main & test executables.
-link_libraries(optisearch optisearch-common)
-link_libraries(optisearch-test optisearch-common)
+target_link_libraries(optisearch optisearch-common)
+target_link_libraries(optisearch-test optisearch-common)

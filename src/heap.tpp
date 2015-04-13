@@ -11,7 +11,7 @@ Pair<P, V>::Pair(P priority, V value) {
 // Comparing two pairs at given locations in the heap.
 template <typename P, typename V>
 int Heap<P, V>::compareAt(int idx1, int idx2) const {
-    return compare(pairs.at(idx1), pairs.at(idx2));
+    return comparator(pairs.at(idx1).priority, pairs.at(idx2).priority);
 }
 
 // Getting the parent index of an index.

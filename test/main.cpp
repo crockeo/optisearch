@@ -1,5 +1,14 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-// Including all of the individual tests.
+//////////////
+// Includes //
+#include <vector>
+
+#include "../src/board.hpp"
+#include "../src/heap.hpp"
+
+///////////
+// Tests //
+#include "board.cpp"
 #include "heap.cpp"
