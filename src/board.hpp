@@ -46,6 +46,10 @@ public:
     // Getting the state of a value at a given postiion in the Board.
     int getState(int, int) const;
 
+    // Getting the distance from a value at a given position and its target
+    // position.
+    int distance(int, int) const;
+
     // Getting the whole set of states as a vector.
     std::vector<int> asVector() const;
 

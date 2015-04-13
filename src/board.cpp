@@ -1,5 +1,9 @@
 #include "board.hpp"
 
+//////////////
+// Includes //
+#include <cstdlib>
+
 //////////
 // Code //
 
@@ -75,6 +79,19 @@ int Board::getState(int col, int row) const {
         return -1;
 
     return states.at(i);
+}
+
+// Getting the distance from a value at a given position and its target
+// position.
+int Board::distance(int col, int row) const {
+    int state = getState(col, row);
+    if (state == -1)
+        return -1;
+
+    int tcol = state % width,
+        trow = state / width;
+
+    return std::abs(col - tcol) + std::abs(row - trow);
 }
 
 // Getting the whole set of states as a vector.

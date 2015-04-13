@@ -61,6 +61,26 @@ TEST_CASE("Board Construction") {
             REQUIRE(filled.getState(col, row) == row * filled.getWidth() + col);
 }
 
+// Testing the distance function on a board.
+TEST_CASE("Board Distance") {
+    std::vector<int> states {
+        1, 3, 7,
+        2, 4, 8,
+        5, 0, 6
+    };
+    Board filled(3, 3, states);
+
+    REQUIRE(filled.distance(0, 0) == 1);
+    REQUIRE(filled.distance(1, 0) == 2);
+    REQUIRE(filled.distance(2, 0) == 3);
+    REQUIRE(filled.distance(0, 1) == 3);
+    REQUIRE(filled.distance(1, 1) == 0);
+    REQUIRE(filled.distance(2, 1) == 1);
+    REQUIRE(filled.distance(0, 2) == 3);
+    REQUIRE(filled.distance(1, 2) == 3);
+    REQUIRE(filled.distance(2, 2) == 2);
+}
+
 ////
 // Heap
 
