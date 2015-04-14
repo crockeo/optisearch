@@ -36,6 +36,10 @@ public:
     // Creating an empty board (with everything at 0) at a given width & height.
     Board(int, int);
 
+    // Creating a useless board - with size 0 on both width and height and no
+    // states.
+    Board();
+
     // Checking equality between this and another board.
     bool operator==(const Board&) const;
 

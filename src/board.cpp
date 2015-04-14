@@ -50,6 +50,13 @@ Board::Board(int width, int height) :
         states[i] = 0;
 }
 
+// Creating a useless board - with size 0 on both width and height and no
+// states.
+Board::Board() {
+    this->width = 0;
+    this->height = 0;
+}
+
 // Checking equality between this and another board.
 bool Board::operator==(const Board& b) const {
     if (width != b.width || height != b.height)

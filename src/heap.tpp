@@ -87,10 +87,19 @@ void Heap<P, V>::insert(P priority, V value) {
 template <typename P, typename V>
 V Heap<P, V>::peek() const { return pairs.at(0).value; }
 
+// Peeking at the max priority & value in the heap.
+template <typename P, typename V>
+Pair<P, V> Heap<P, V>::peekTuple() const { return pairs.at(0); }
+
 // Removing the max value in the heap & maintaining the heap property.
 template <typename P, typename V>
-V Heap<P, V>::remove() {
-    V value = pairs.at(0).value;
+V Heap<P, V>::remove() { return removeTuple().value; }
+
+// Removing the max priority & value in the heap & maintaining the heap
+// property.
+template <typename P, typename V>
+Pair<P, V> Heap<P, V>::removeTuple() {
+    Pair<P, V> value = pairs.at(0);
     pairs[0] = pairs.at(pairs.size() - 1);
     pairs.pop_back();
 

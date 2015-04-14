@@ -57,8 +57,15 @@ public:
     // Peeking at the max value in the heap.
     V peek() const;
 
+    // Peeking at the max priority & value in the heap.
+    Pair<P, V> peekTuple() const;
+
     // Removing the max value in the heap & maintaining the heap property.
     V remove();
+
+    // Removing the max priority & value in the heap & maintaining the heap
+    // property.
+    Pair<P, V> removeTuple();
 
     // Getting the current size of the heap.
     int size() const;
