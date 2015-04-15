@@ -33,12 +33,11 @@ std::vector<BoardMove> findSolution(const Board b) {
     moveList.insert(0.f, std::make_tuple(b, std::vector<BoardMove>()));
 
     while (!moveList.isEmpty()) {
-        auto pair      = moveList.removeTuple();
-        auto board     = std::get<0>(pair.value);
-        auto prevMoves = std::get<1>(pair.value);
+        auto pair = moveList.removeTuple();
 
+        Board board = std::get<0>(pair.value);
         for (auto bm: board.validMoves()) {
-            std::vector<BoardMove> moves = prevMoves;
+            std::vector<BoardMove> moves = std::get<1>(pair.value);
             moves.push_back(bm);
 
             Board temp = board.doMove(bm);
