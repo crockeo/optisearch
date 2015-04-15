@@ -76,6 +76,11 @@ bool Board::operator==(const Board& b) const {
     return true;
 }
 
+// Ordering boards.
+bool Board::operator<(const Board& b) const {
+    return asVector() < b.asVector();
+}
+
 // Checking if a move is valid.
 bool Board::isValidMove(BoardMove bm) const {
     return bm.col1 >= 0 && bm.col1 < width  &&

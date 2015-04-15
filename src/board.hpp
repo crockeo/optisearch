@@ -46,6 +46,9 @@ public:
     // Checking equality between this and another board.
     bool operator==(const Board&) const;
 
+    // Ordering boards.
+    bool operator<(const Board&) const;
+
     // Checking if a move is valid.
     bool isValidMove(BoardMove) const;
 

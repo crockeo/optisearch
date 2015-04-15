@@ -4,6 +4,7 @@
 // Includes //
 #include <vector>
 #include <tuple>
+#include <set>
 
 //////////
 // Code //
@@ -28,17 +29,8 @@ std::vector<BoardMove> findSolution(const Board b) {
         return std::vector<BoardMove>();
 
     SearchHeap moveList([](float p1, float p2) -> float { return p2 - p1; });
-
-    for (auto bm: b.validMoves()) {
-        std::vector<BoardMove> moves { bm };
-        Board temp = b.doMove(bm);
-
-        int h = heuristic(temp);
-        if (h == 0)
-            return moves;
-
-        moveList.insert(h / 2.f + 0.5f, std::make_tuple(temp, moves));
-    }
+    std::set<Board> seen;
+    moveList.insert(0.f, std::make_tuple(b, std::vector<BoardMove>()));
 
     while (!moveList.isEmpty()) {
         auto pair      = moveList.removeTuple();
@@ -50,6 +42,8 @@ std::vector<BoardMove> findSolution(const Board b) {
             moves.push_back(bm);
 
             Board temp = board.doMove(bm);
+            if (seen.find(temp) != seen.end())
+                continue;
 
             int h = heuristic(temp);
             if (h == 0)
