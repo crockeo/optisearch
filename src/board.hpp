@@ -16,6 +16,9 @@ struct BoardMove {
 
     // Constructing a new BoardMove.
     BoardMove(int, int, int, int);
+
+    // Checking equality between two BoardMoves.
+    bool operator==(const BoardMove&) const;
 };
 
 // An entire board.

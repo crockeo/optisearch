@@ -18,6 +18,12 @@ BoardMove::BoardMove(int col1, int row1,
     this->row2 = row2;
 }
 
+// Checking equality between two BoardMoves.
+bool BoardMove::operator==(const BoardMove& bm) const {
+    return (col1 == bm.col1 && row1 == bm.row1 && col2 == bm.col2 && row2 == bm.row2) ||
+           (col1 == bm.col2 && row1 == bm.row2 && col2 == bm.col1 && row2 == bm.row1);
+}
+
 // Converting a 2D coordinate into a 1D coordinate.
 int Board::index(int col, int row) const {
     if (col < 0 || col >= width || row < 0 || row >= height) return -1;
