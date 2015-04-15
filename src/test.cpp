@@ -42,6 +42,57 @@ TEST_CASE("Board Heuristic") {
     REQUIRE(heuristic(filled) == 18);
 }
 
+// Testing isSolution.
+TEST_CASE("Solution Checking") {
+    std::vector<int> states {
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
+    };
+    Board filled(3, 3, states);
+
+    REQUIRE(isSolution(filled));
+}
+
+// Testing the search method.
+TEST_CASE("Board Search") {
+    // An already-solved board.
+    std::vector<int> solvedStates {
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
+    };
+    Board solved(3, 3, solvedStates);
+    std::vector<BoardMove> solvedMoves = findSolution(solved);
+    REQUIRE(solvedMoves.size() == 0);
+
+    // An easy first-move solution.
+    std::vector<int> easyStates {
+        1, 0, 2,
+        3, 4, 5,
+        6, 7, 8
+    };
+    Board easy(3, 3, easyStates);
+    std::vector<BoardMove> easyMoves = findSolution(easy);
+
+    REQUIRE(easyMoves.size() == 1);
+    REQUIRE(easyMoves.at(0) == BoardMove(0, 0, 1, 0));
+
+    // Testing a move involved solution.
+    std::vector<int> complicatedStates {
+        1, 2, 5,
+        3, 4, 0,
+        6, 7, 8
+    };
+    Board complicated(3, 3, complicatedStates);
+    std::vector<BoardMove> complicatedMoves = findSolution(complicated);
+
+    REQUIRE(complicatedMoves.size() == 3);
+    REQUIRE(complicatedMoves.at(0) == BoardMove(2, 0, 2, 1));
+    REQUIRE(complicatedMoves.at(1) == BoardMove(1, 0, 2, 0));
+    REQUIRE(complicatedMoves.at(2) == BoardMove(0, 0, 1, 0));
+}
+
 ////
 // Board
 
