@@ -37,12 +37,13 @@ std::vector<BoardMove> findSolution(const Board b) {
 
         Board board = std::get<0>(pair.value);
         for (auto bm: board.validMoves()) {
-            std::vector<BoardMove> moves = std::get<1>(pair.value);
-            moves.push_back(bm);
-
             Board temp = board.doMove(bm);
             if (seen.find(temp) != seen.end())
                 continue;
+            seen.insert(temp);
+
+            std::vector<BoardMove> moves = std::get<1>(pair.value);
+            moves.push_back(bm);
 
             int h = heuristic(temp);
             if (h == 0)

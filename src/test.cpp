@@ -57,40 +57,31 @@ TEST_CASE("Solution Checking") {
 // Testing the search method.
 TEST_CASE("Board Search") {
     // An already-solved board.
-    std::vector<int> solvedStates {
-        0, 1, 2,
-        3, 4, 5,
-        6, 7, 8
-    };
-    Board solved(3, 3, solvedStates);
+    Board solved = loadBoard("res/solved.txt");
     std::vector<BoardMove> solvedMoves = findSolution(solved);
     REQUIRE(solvedMoves.size() == 0);
 
     // An easy first-move solution.
-    std::vector<int> easyStates {
-        1, 0, 2,
-        3, 4, 5,
-        6, 7, 8
-    };
-    Board easy(3, 3, easyStates);
+    Board easy = loadBoard("res/easy.txt");
     std::vector<BoardMove> easyMoves = findSolution(easy);
 
     REQUIRE(easyMoves.size() == 1);
     REQUIRE(easyMoves.at(0) == BoardMove(0, 0, 1, 0));
 
     // Testing a move involved solution.
-    std::vector<int> complicatedStates {
-        1, 2, 5,
-        3, 4, 0,
-        6, 7, 8
-    };
-    Board complicated(3, 3, complicatedStates);
+    Board complicated = loadBoard("res/complicated.txt");
     std::vector<BoardMove> complicatedMoves = findSolution(complicated);
 
     REQUIRE(complicatedMoves.size() == 3);
     REQUIRE(complicatedMoves.at(0) == BoardMove(2, 0, 2, 1));
     REQUIRE(complicatedMoves.at(1) == BoardMove(1, 0, 2, 0));
     REQUIRE(complicatedMoves.at(2) == BoardMove(0, 0, 1, 0));
+
+    // Trying to find a solution on a board that has no solution.
+    Board unsolvable = loadBoard("res/unsolvable.txt");
+    std::vector<BoardMove> unsolvableMoves = findSolution(unsolvable);
+
+    REQUIRE(unsolvableMoves.size() == 0);
 }
 
 ////
