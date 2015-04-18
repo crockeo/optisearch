@@ -21,8 +21,10 @@
 #include <vector>
 
 #include "search.hpp"
+#include "astar.hpp"
 #include "board.hpp"
 #include "heap.hpp"
+#include "maze.hpp"
 
 //////////
 // Code //
@@ -82,6 +84,16 @@ TEST_CASE("Board Search") {
     std::vector<BoardMove> unsolvableMoves = findSolution(unsolvable);
 
     REQUIRE(unsolvableMoves.size() == 0);
+}
+
+////
+// A* Search
+
+TEST_CASE("A* Search") {
+    Maze maze(0, 0, 23, 10);
+    SearchableMaze searchableMaze(maze);
+
+    AStarSearcher<Maze> searcher(searchableMaze);
 }
 
 ////
@@ -263,4 +275,50 @@ TEST_CASE("AsVector") {
     REQUIRE(pairs.at(1).value == 2);
     REQUIRE(pairs.at(2).value == 3);
     REQUIRE(pairs.at(3).value == 1);
+}
+
+////
+// Maze
+
+// Testing the maze constructor.
+TEST_CASE("Maze Construction") {
+    Maze maze(0, 0, 1, 1);
+
+    REQUIRE(maze.px == 0);
+    REQUIRE(maze.py == 0);
+    REQUIRE(maze.tx == 1);
+    REQUIRE(maze.ty == 1);
+}
+
+// Testing maze heuristic.
+TEST_CASE("Maze Heuristic") {
+    Maze maze1(0, 0, 1, 1);
+    REQUIRE(maze1.heuristic() == 2);
+
+    Maze maze2(0, 0, 10, 0);
+    REQUIRE(maze2.heuristic() == 10);
+}
+
+// Testing maze equality.
+TEST_CASE("Maze Equality") {
+    Maze maze1(0, 0, 1, 1);
+    Maze maze2(1, 1, 0, 0);
+    Maze maze3(0, 0, 1, 1);
+
+    REQUIRE(maze1 != maze2);
+    REQUIRE(maze2 != maze3);
+    REQUIRE(maze1 == maze3);
+}
+
+TEST_CASE("Maze Ordering") {
+    Maze maze1(0, 0, 0, 0);
+    Maze maze2(0, 0, 0, 1);
+    Maze maze3(0, 0, 1, 0);
+    Maze maze4(0, 1, 0, 0);
+    Maze maze5(1, 0, 0, 0);
+
+    REQUIRE(maze1 < maze2);
+    REQUIRE(maze2 < maze3);
+    REQUIRE(maze3 < maze4);
+    REQUIRE(maze4 < maze5);
 }

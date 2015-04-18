@@ -9,7 +9,8 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
 
 # Creating the optisearch-common library.
 set(SOURCES src/search.cpp
-            src/board.cpp)
+            src/board.cpp
+            src/maze.cpp)
 
 add_library(optisearch-common ${SOURCES})
 
