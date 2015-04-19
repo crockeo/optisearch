@@ -81,6 +81,15 @@ bool Board::operator<(const Board& b) const {
     return asVector() < b.asVector();
 }
 
+// Creating a heuristic.
+int Board::heuristic() const {
+    int sum = 0;
+    for (int row = 0; row < getHeight(); row++)
+        for (int col = 0; col < getWidth(); col++)
+            sum += distance(col, row);
+    return sum;
+}
+
 // Checking if a move is valid.
 bool Board::isValidMove(BoardMove bm) const {
     return bm.col1 >= 0 && bm.col1 < width  &&
@@ -170,6 +179,41 @@ std::vector<int> Board::asVector() const { return states; }
 // Getting the respective dimensions of this board.
 int Board::getWidth() const { return width; }
 int Board::getHeight() const { return height; }
+
+// Creating a new search problem from a board.
+SearchableBoard::SearchableBoard(Board board) :
+        initialBoard(board) { }
+
+// Getting the initial state of this search problem.
+Board SearchableBoard::getInitialState() const {
+    return initialBoard;
+}
+
+#include <iostream>
+
+// Checking if a given value is the goal state.
+bool SearchableBoard::isGoal(Board board) const {
+    for (int row = 0; row < board.getHeight(); row++)
+        for (int col = 0; col < board.getWidth(); col++)
+            if (board.getState(col, row) != row * board.getWidth() + col)
+                return false;
+
+    return true;
+}
+
+// Getting the list of possible next states from a given state.
+std::vector<Board> SearchableBoard::nextStates(Board board) const {
+    std::vector<Board> boards;
+    std::vector<BoardMove> validMoves = board.validMoves();
+    for (auto bm: validMoves) {
+        Board temp(board);
+        temp.doMove(bm);
+
+        boards.push_back(temp);
+    }
+
+    return boards;
+}
 
 // Loading a board from an input stream.
 Board loadBoard(std::istream&& in) throw(std::runtime_error) {

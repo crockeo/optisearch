@@ -6,6 +6,8 @@
 #include <exception>
 #include <vector>
 
+#include "searchable.hpp"
+
 //////////
 // Code //
 
@@ -49,6 +51,9 @@ public:
     // Ordering boards.
     bool operator<(const Board&) const;
 
+    // Creating a heuristic.
+    int heuristic() const;
+
     // Checking if a move is valid.
     bool isValidMove(BoardMove) const;
 
@@ -75,6 +80,25 @@ public:
     // Getting the respective dimensions of this board.
     int getWidth() const;
     int getHeight() const;
+};
+
+// A Searchable version of a board.
+class SearchableBoard : public Searchable<Board> {
+private:
+    Board initialBoard;
+
+public:
+    // Creating a new search problem from a board.
+    SearchableBoard(Board);
+
+    // Getting the initial state of this search problem.
+    Board getInitialState() const;
+
+    // Checking if a given value is the goal state.
+    bool isGoal(Board) const;
+
+    // Getting the list of possible next states from a given state.
+    std::vector<Board> nextStates(Board) const;
 };
 
 // Loading a board from an input stream.

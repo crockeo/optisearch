@@ -14,6 +14,8 @@ template <typename T>
 AStarSearcher<T>::AStarSearcher(const Searchable<T>& searchProblem)
         : Searcher<T>(searchProblem) { }
 
+#include <iostream>
+
 // Finding a series of states that go from the initial state to a goal
 // state.
 template <typename T>
@@ -21,11 +23,17 @@ std::vector<T> AStarSearcher<T>::findSolution() {
     if (this->solution != nullptr)
         return *this->solution;
 
+    std::cout << "Here now." << std::endl;
+
     T initial = this->searchProblem.getInitialState();
+    std::cout << "After initial now." << std::endl;
     if (this->searchProblem.isGoal(initial)) {
+        std::cout << "In if." << std::endl;
         std::vector<T> ret { initial };
         return ret;
     }
+
+    std::cout << "There now." << std::endl;
 
     Heap<float, std::vector<T>> searchHeap([](float p1, float p2) { return p2 - p1; });
     std::vector<T> initialVector { initial };

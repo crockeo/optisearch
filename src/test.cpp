@@ -92,6 +92,11 @@ TEST_CASE("Board Search") {
 // A* Search
 
 TEST_CASE("A* Search") {
+    // Testing board solution.
+    AStarSearcher<Board> boardSearcher(SearchableBoard(loadBoard("res/complicated.txt")));
+    std::vector<Board> boardSolution = boardSearcher.findSolution();
+
+    // Testing maze solution.
     Maze maze(0, 0, 10, 0);
     SearchableMaze searchableMaze(maze);
 
