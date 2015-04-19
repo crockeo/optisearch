@@ -189,8 +189,6 @@ Board SearchableBoard::getInitialState() const {
     return initialBoard;
 }
 
-#include <iostream>
-
 // Checking if a given value is the goal state.
 bool SearchableBoard::isGoal(Board board) const {
     for (int row = 0; row < board.getHeight(); row++)
