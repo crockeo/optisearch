@@ -37,21 +37,24 @@ bool Maze::operator<(const Maze& b) {
     return t < o;
 }
 
+// Ordering boards.
+bool operator<(const Maze& m1, const Maze& m2) { return m1 < m2; }
+
 // Constructing a new SearchableMaze from a given Maze as its initial
 // state.
 SearchableMaze::SearchableMaze(Maze board) :
         initialMaze(board) { };
 
 // Getting the initial state of this search problem.
-Maze SearchableMaze::getInitialState() { return initialMaze; }
+Maze SearchableMaze::getInitialState() const { return initialMaze; }
 
 // Checking if a given value is the goal state.
-bool SearchableMaze::isGoal(Maze b) {
+bool SearchableMaze::isGoal(Maze b) const {
     return b.px == b.tx && b.py == b.ty;
 }
 
 // Getting the list of possible next states from a given state.
-std::vector<Maze> SearchableMaze::nextStates(Maze b) {
+std::vector<Maze> SearchableMaze::nextStates(Maze b) const {
     std::vector<Maze> next;
 
     next.push_back(Maze(b.px - 1, b.py    , b.tx, b.ty));

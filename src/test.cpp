@@ -11,13 +11,9 @@
 //   In other words, sorry. I hope you'll forgive me one day. And if not, just
 //  send all of your complaints nowhere.
 
-//////////////////////
-// Setting up Catch //
-#define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-
 //////////////
 // Includes //
+#include "catch.hpp"
 #include <vector>
 
 #include "search.hpp"
@@ -28,6 +24,10 @@
 
 //////////
 // Code //
+
+// LONG_TESTING defines whether or not one ought to wait for the long-running
+// tests to complete.
+const bool LONG_TESTING = false;
 
 ////
 // Search
@@ -79,21 +79,42 @@ TEST_CASE("Board Search") {
     REQUIRE(complicatedMoves.at(1) == BoardMove(1, 0, 2, 0));
     REQUIRE(complicatedMoves.at(2) == BoardMove(0, 0, 1, 0));
 
-    // Trying to find a solution on a board that has no solution.
-    Board unsolvable = loadBoard("res/unsolvable.txt");
-    std::vector<BoardMove> unsolvableMoves = findSolution(unsolvable);
+    if (LONG_TESTING) {
+        // Trying to find a solution on a board that has no solution.
+        Board unsolvable = loadBoard("res/unsolvable.txt");
+        std::vector<BoardMove> unsolvableMoves = findSolution(unsolvable);
 
-    REQUIRE(unsolvableMoves.size() == 0);
+        REQUIRE(unsolvableMoves.size() == 0);
+    }
 }
 
 ////
 // A* Search
 
 TEST_CASE("A* Search") {
-    Maze maze(0, 0, 23, 10);
+    Maze maze(0, 0, 10, 0);
     SearchableMaze searchableMaze(maze);
 
     AStarSearcher<Maze> searcher(searchableMaze);
+
+    std::vector<Maze> testSolution {
+        Maze( 0, 0, 10, 0),
+        Maze( 1, 0, 10, 0),
+        Maze( 2, 0, 10, 0),
+        Maze( 3, 0, 10, 0),
+        Maze( 4, 0, 10, 0),
+        Maze( 5, 0, 10, 0),
+        Maze( 6, 0, 10, 0),
+        Maze( 7, 0, 10, 0),
+        Maze( 8, 0, 10, 0),
+        Maze( 9, 0, 10, 0),
+        Maze(10, 0, 10, 0),
+    };
+
+    std::vector<Maze> foundSolution = searcher.findSolution();
+
+    for (int i = 0; i < testSolution.size(); i++)
+        REQUIRE(testSolution.at(i) == foundSolution.at(i));
 }
 
 ////

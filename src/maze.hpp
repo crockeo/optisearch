@@ -27,6 +27,9 @@ struct Maze {
     bool operator<(const Maze&);
 };
 
+// Ordering boards.
+bool operator<(const Maze&, const Maze&);
+
 // SearchableMaze is the Searchable instance for finding a solution to this
 // board.
 class SearchableMaze : public Searchable<Maze> {
@@ -39,13 +42,13 @@ public:
     SearchableMaze(Maze);
 
     // Getting the initial state of this search problem.
-    Maze getInitialState();
+    Maze getInitialState() const;
 
     // Checking if a given value is the goal state.
-    bool isGoal(Maze);
+    bool isGoal(Maze) const;
 
     // Getting the list of possible next states from a given state.
-    std::vector<Maze> nextStates(Maze);
+    std::vector<Maze> nextStates(Maze) const;
 };
 
 #endif

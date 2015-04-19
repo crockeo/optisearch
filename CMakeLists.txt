@@ -16,7 +16,7 @@ add_library(optisearch-common ${SOURCES})
 
 # Setting up the executables themselves.
 add_executable(optisearch src/main.cpp)
-add_executable(optisearch-test src/test.cpp)
+add_executable(optisearch-test src/testsetup.cpp src/test.cpp)
 
 # Linking the libraries to the main & test executables.
 target_link_libraries(optisearch optisearch-common)

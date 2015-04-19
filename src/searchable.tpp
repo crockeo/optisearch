@@ -4,14 +4,23 @@
 // Creating a new searcher from a given search problem.
 template <typename T>
 Searcher<T>::Searcher(const Searchable<T>&& searchProblem) :
-        solution(),
         visited() {
     this->searchProblem = searchProblem;
+    this->solution = nullptr;
 }
 
 template <typename T>
 Searcher<T>::Searcher(const Searchable<T>& searchProblem) :
-        Searcher(searchProblem) { }
+        searchProblem(searchProblem),
+        visited() {
+    this->solution = nullptr;
+}
+
+// Destroying this thingy.
+template <typename T>
+Searcher<T>::~Searcher() {
+    delete this->solution;
+}
 
 // Checking if a given solution is actually a valid solution.
 template <typename T>
