@@ -2,8 +2,6 @@
 // Includes //
 #include "heap.hpp"
 
-#include <iostream>
-
 //////////
 // Code //
 
@@ -15,8 +13,6 @@ AStarSearcher<T>::AStarSearcher(const Searchable<T>&& searchProblem)
 template <typename T>
 AStarSearcher<T>::AStarSearcher(const Searchable<T>& searchProblem)
         : Searcher<T>(searchProblem) { }
-
-#include <iostream>
 
 // Finding a series of states that go from the initial state to a goal
 // state.
@@ -31,7 +27,7 @@ std::vector<T> AStarSearcher<T>::findSolution() {
         return ret;
     }
 
-    Heap<float, std::vector<T>> searchHeap([](float p1, float p2) { return p1 - p2; });
+    Heap<float, std::vector<T>> searchHeap([](float p1, float p2) { return p2 - p1; });
     std::vector<T> initialVector { initial };
     searchHeap.insert(0.f, initialVector);
     this->visited.insert(initial);
@@ -40,10 +36,7 @@ std::vector<T> AStarSearcher<T>::findSolution() {
         auto pair = searchHeap.removeTuple();
         
         for (T t: this->searchProblem.nextStates(pair.value.at(pair.value.size() - 1))) {
-            // TODO: There is a god damn segfault happening here and I need to
-            //       find out why. I think it has something to do with
-            //       inheriting values from superclasses? But some weird shit
-            //       might be happening. I dunno.
+            auto loc = this->visited.find(t);
             if (this->visited.find(t) == this->visited.end()) {
                 std::vector<T> temp = pair.value;
                 temp.push_back(t);
@@ -57,7 +50,7 @@ std::vector<T> AStarSearcher<T>::findSolution() {
 
                 this->visited.insert(t);
 
-                searchHeap.insert(pair.priority + t.heuristic() / 2.f + 0.5f, temp);
+                searchHeap.insert(pair.priority + (t.heuristic() / 2.f) + 1.f, temp);
             }
         }
     }

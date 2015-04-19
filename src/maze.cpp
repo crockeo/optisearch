@@ -29,16 +29,13 @@ bool Maze::operator!=(const Maze& b) {
     return !(*this == b);
 }
 
-// Ordering different boards.
-bool Maze::operator<(const Maze& b) {
-    std::vector<int> t {   px,   py,   tx,   ty };
-    std::vector<int> o { b.px, b.py, b.tx, b.ty };
+// Ordering boards.
+bool operator<(const Maze& m1, const Maze& m2) {
+    std::vector<int> t { m1.px, m1.py, m1.tx, m1.ty };
+    std::vector<int> o { m2.px, m2.py, m2.tx, m2.ty };
 
     return t < o;
 }
-
-// Ordering boards.
-bool operator<(const Maze& m1, const Maze& m2) { return m1 < m2; }
 
 // Constructing a new SearchableMaze from a given Maze as its initial
 // state.

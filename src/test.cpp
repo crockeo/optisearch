@@ -343,3 +343,31 @@ TEST_CASE("Maze Ordering") {
     REQUIRE(maze3 < maze4);
     REQUIRE(maze4 < maze5);
 }
+
+TEST_CASE("Searchable Maze") {
+    Maze maze1(0, 0, 1, 0);
+    Maze maze2(1, 0, 1, 0);
+
+    SearchableMaze smaze(maze1);
+
+    // Checking getInitialState
+    REQUIRE(smaze.getInitialState() == maze1);
+    REQUIRE(smaze.getInitialState() != maze2);
+
+    // Checking isGoal
+    REQUIRE(!smaze.isGoal(maze1));
+    REQUIRE( smaze.isGoal(maze2));
+
+    // Checking nextStates.
+    std::vector<Maze> testNext {
+        Maze(-1,  0, 1, 0),
+        Maze( 1,  0, 1, 0),
+        Maze( 0, -1, 1, 0),
+        Maze( 0,  1, 1, 0)
+    };
+
+    std::vector<Maze> realNext = smaze.nextStates(maze1);
+
+    for (int i = 0; i < testNext.size(); i++)
+        REQUIRE(testNext.at(i) == realNext.at(i));
+}

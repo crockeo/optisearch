@@ -22,9 +22,6 @@ struct Maze {
     // Checking equality between boards.
     bool operator==(const Maze&);
     bool operator!=(const Maze&);
-
-    // Ordering different boards.
-    bool operator<(const Maze&);
 };
 
 // Ordering boards.
