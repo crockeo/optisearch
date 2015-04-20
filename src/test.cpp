@@ -97,13 +97,11 @@ TEST_CASE("A* Search") {
     SearchableBoard searchableComplicated(complicated);
     std::vector<Board> boardSolution = AStarSearcher<Board>(searchableComplicated).findSolution();
 
-    REQUIRE(boardSolution.size() > 0);
-
+    REQUIRE(boardSolution.size() == 4);
     REQUIRE(boardSolution.at(0) == complicated);
     REQUIRE(boardSolution.at(1) == loadBoard("res/solution/01.txt"));
     REQUIRE(boardSolution.at(2) == loadBoard("res/solution/02.txt"));
-    REQUIRE(boardSolution.at(3) == loadBoard("res/solution/03.txt"));
-    REQUIRE(boardSolution.at(4) == loadBoard("res/solved.txt"));
+    REQUIRE(boardSolution.at(3) == loadBoard("res/solved.txt"));
 
     // Testing maze solution.
     Maze maze(0, 0, 10, 0);

@@ -203,12 +203,8 @@ bool SearchableBoard::isGoal(Board board) const {
 std::vector<Board> SearchableBoard::nextStates(Board board) const {
     std::vector<Board> boards;
     std::vector<BoardMove> validMoves = board.validMoves();
-    for (auto bm: validMoves) {
-        Board temp(board);
-        temp.doMove(bm);
-
-        boards.push_back(temp);
-    }
+    for (auto bm: validMoves)
+        boards.push_back(board.doMove(bm));
 
     return boards;
 }
